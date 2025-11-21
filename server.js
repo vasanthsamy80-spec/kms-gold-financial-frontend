@@ -1,4 +1,7 @@
 require('dotenv').config();
+
+const express = require('express');
+
 const mongoose = require('mongoose');
 const express = require('express');
 
@@ -25,16 +28,12 @@ const PDFDocument = require("pdfkit");
 const Loan = require("./models/Loan");
 
 
+const uri = process.env.MONGO_URI; // <-- load from .env
 
-const uri = process.env.MONGODB_URI;
 
-mongoose.connect(uri, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true
-})
-.then(() => console.log('✅ MongoDB Connected'))
-.catch(err => console.log('❌ Connection Error:', err));
-
+mongoose.connect(uri)
+  .then(() => console.log('✅ MongoDB Connected'))
+  .catch(err => console.log('❌ Connection Error:', err));
 
 
 
