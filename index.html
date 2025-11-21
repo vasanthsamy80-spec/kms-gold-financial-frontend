@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KMS Gold Financial</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+
+<header>
+    <h2 class="logo">KMS GOLD FINANCIAL</h2>
+
+    <nav class="navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="dashboard.html" id="dashboardLink" style="display:none;">Dashboard</a>
+
+        <button class="btnLogin-popup" id="loginButton">Login</button>
+        <button class="btnLogin-popup" id="logoutButton" style="display:none; background:red;">Logout</button>
+    </nav>
+</header>
+
+<script>
+    const email = localStorage.getItem("userEmail");
+
+    if (email) {
+        document.getElementById("loginButton").style.display = "none";
+        document.getElementById("logoutButton").style.display = "block";
+        document.getElementById("dashboardLink").style.display = "inline-block";
+    }
+
+    document.getElementById("logoutButton").onclick = () => {
+        localStorage.removeItem("userEmail");
+        window.location.href = "index.html";
+    };
+</script>
+
+<!-- POPUP WRAPPER -->
+<div class="wrapper">
+
+    <span class="icon-close"><ion-icon name="close"></ion-icon></span>
+
+    <!-- LOGIN FORM -->
+    <div class="form-box login">
+        <h2>Login</h2>
+        <form id="loginForm">
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="text" id="emailOrPhone" required>
+                <label>Email or Phone</label>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" id="loginPassword" required>
+                <label>Password</label>
+            </div>
+
+            <div class="remember-forgot">
+                <label><input type="checkbox"> Remember me</label>
+                <a href="#" id="forgotPasswordLink">Forgot Password?</a>
+            </div>
+
+            <button type="submit" class="btn">Login</button>
+
+            <div class="login-register">
+                <p>Don't have an account?
+                    <a href="#" class="register-link">Register</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <!-- REGISTER FORM -->
+    <div class="form-box register">
+        <h2>Registration</h2>
+        <form id="registerForm">
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="person"></ion-icon></span>
+                <input type="text" id="registerUsername" required>
+                <label>Username</label>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="email" id="registerEmail" required>
+                <label>Email</label>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="call"></ion-icon></span>
+                <input type="text" id="registerPhone" required>
+                <label>Phone Number</label>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" id="registerPassword" required>
+                <label>Password</label>
+            </div>
+
+            <button type="submit" class="btn">Register</button>
+
+            <div class="login-register">
+                <p>Already have an account?
+                    <a href="#" class="login-link">Login</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+    <!-- FORGOT PASSWORD FORM -->
+    <div class="form-box forgot-password">
+        <h2>Reset Password</h2>
+        <form id="forgotPasswordForm">
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                <input type="text" id="resetEmailOrPhone" required>
+                <label>Email or Phone</label>
+            </div>
+
+            <div class="input-box">
+                <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                <input type="password" id="newPassword" required>
+                <label>New Password</label>
+            </div>
+
+            <button type="submit" class="btn">Reset Password</button>
+
+            <div class="login-register">
+                <p>Remembered your password?
+                    <a href="#" class="login-link">Login</a>
+                </p>
+            </div>
+        </form>
+    </div>
+
+</div>
+
+<script src="script.js"></script>
+
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+</body>
+</html>

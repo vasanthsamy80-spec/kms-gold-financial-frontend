@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About | KMS Gold Financial</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+
+<header>
+    <h2 class="logo">KMS GOLD FINANCIAL</h2>
+    <nav class="navigation">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="services.html">Services</a>
+        <a href="contact.html">Contact</a>
+        <a href="dashboard.html" id="dashboardLink" style="display:none;">Dashboard</a>
+<button class="btnLogin-popup" id="loginButton">Login</button>
+<button class="btnLogin-popup" id="logoutButton" style="display:none; background:red;">Logout</button>
+
+    </nav>
+</header>
+<script>
+    const email = localStorage.getItem("userEmail");
+
+    if (email) {
+        document.getElementById("loginButton").style.display = "none";
+        document.getElementById("logoutButton").style.display = "block";
+        document.getElementById("dashboardLink").style.display = "inline-block";
+    } else {
+        document.getElementById("dashboardLink").style.display = "none";
+    }
+
+    document.getElementById("logoutButton").onclick = () => {
+        localStorage.removeItem("userEmail");
+        window.location.href = "index.html";
+    };
+</script>
+
+
+<section style="margin-top:120px; text-align:center; padding:40px; color:black;">
+    <h1 style="color:gold;">About Us</h1>
+    <p style="max-width:700px; margin:auto; font-size:18px;">
+        KMS Gold Financial is a trusted financial service provider, offering secure gold loans, 
+        investment plans, savings protection and customer-first financial guidance.
+    </p>
+</section>
+
+</body>
+</html>

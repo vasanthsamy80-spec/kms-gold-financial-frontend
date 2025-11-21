@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KMS Gold Dashboard</title>
+
+  <!-- Main website design -->
+  <link rel="stylesheet" href="index.css">
+
+  <!-- Dashboard design -->
+  <link rel="stylesheet" href="dashboard.css">
+</head>
+
+<body>
+
+<header>
+  <h2 class="logo">KMS GOLD FINANCIAL</h2>
+  <nav class="navigation">
+      <a href="index.html">Home</a>
+      <a href="about.html">About</a>
+      <a href="services.html">Services</a>
+      <a href="contact.html">Contact</a>
+
+      <!-- Dashboard Visible Only When Logged In -->
+      <a href="dashboard.html" id="dashboardLink" style="display:none;">Dashboard</a>
+
+      <!-- Login / Logout Buttons -->
+      <button class="btnLogin-popup" id="loginButton">Login</button>
+      <button class="btnLogin-popup" id="logoutButton" style="display:none; background:red;">Logout</button>
+  </nav>
+</header>
+
+
+
+<div class="dashboard" style="margin-top:120px;">
+  <h1>Welcome to KMS Gold Finance</h1>
+  <h2 id="userEmail"></h2>
+
+  <div class="section">
+
+    <button class="gold-btn" id="viewRateBtn">📈 View Live Gold Rate</button>
+    <button class="gold-btn" id="loanCalcBtn">💰 Gold Loan Calculator</button>
+
+    <button class="gold-btn" onclick="window.location.href='loan-history.html'">
+      📜 Loan History
+    </button>
+
+    <button class="gold-btn" id="interestCalcBtn">📈 Interest Calculator</button>
+
+    <button class="gold-btn" onclick="window.location.href='interest-history.html'">
+      💵 Interest History
+    </button>
+
+  </div>
+
+  <p id="goldRateDisplay" class="gold-rate-box">
+    Gold Rate: Loading...
+  </p>
+
+  <div id="content"></div>
+</div>
+
+<script src="dashboard.js"></script>
+
+<!-- LOGIN / LOGOUT LOGIC -->
+<script>
+  const email = localStorage.getItem("userEmail");
+
+  const loginBtn = document.getElementById("loginButton");
+  const logoutBtn = document.getElementById("logoutButton");
+  const dashboardLink = document.getElementById("dashboardLink");
+
+  if (!email) {
+      // If not logged in → redirect to home
+      window.location.href = "index.html";
+  }
+
+  // Show logged in email
+  document.getElementById("userEmail").innerText = "Logged in as: " + email;
+
+  // When logged in
+  loginBtn.style.display = "none";
+  logoutBtn.style.display = "inline-block";
+  dashboardLink.style.display = "inline-block";
+
+  // Logout function
+  logoutBtn.onclick = () => {
+      localStorage.removeItem("userEmail");
+      window.location.href = "index.html";
+  };
+</script>
+
+
+
+</body>
+</html>

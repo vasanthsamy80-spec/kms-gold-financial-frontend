@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Loan History</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f7f0d6;
+            text-align: center;
+            padding: 20px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+
+        /* ⭐ Improved Top Back Button */
+        .top-nav {
+            position: absolute;
+            top: 15px;
+            left: 20px;       /* moved to left like a normal BACK button */
+        }
+
+        .top-nav a {
+            background: #7b2cbf;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+        }
+
+        .top-nav a:hover {
+            background: #6921a3;
+        }
+
+        table {
+            margin: 0 auto;
+            border-collapse: collapse;
+            width: 45%;
+            background: white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+
+        table td {
+            border: 1px solid #ccc;
+            padding: 12px;
+            font-size: 18px;
+            text-align: left;
+        }
+
+        .btn {
+            margin-top: 20px;
+            background: #555;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <!-- ⭐ Only one back button now -->
+    <div class="top-nav">
+        <a href="dashboard.html">⬅ Back</a>
+    </div>
+
+    <h1>📜 Loan History</h1>
+
+    <div id="loanHistoryContainer"></div>
+
+
+    <button class="btn" id="downloadPdfBtn">Download PDF</button>
+
+    <script src="loan-history.js"></script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Gold Loan Calculator</title>
+  <style>
+    body { 
+      font-family: Arial, sans-serif;
+      background-color: #fff8e1;
+      color: #222;
+      text-align: center;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      margin: 50px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #f4b400;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .result {
+      margin-top: 20px;
+      background: #fff3cd;
+      padding: 10px;
+      border-radius: 5px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="box">
+    <h2>💰 Gold Loan Calculator</h2>
+
+    <a href="dashboard.html" style="text-decoration:none; color:white;">
+      <button style="background:#f4b400; border:none; padding:10px 20px; border-radius:5px; margin-top:20px;">
+        ⬅ Back to Dashboard
+      </button>
+    </a>
+
+    <label>Select Purity:</label>
+    <select id="purity">
+      <option value="24K">24K Gold</option>
+      <option value="22K">22K Gold</option>
+    </select>   
+
+    <div id="rate24Div">
+      <label>Enter Today’s 24K Rate (₹/gram):</label>
+      <input type="number" id="rate24" placeholder="e.g. 11300">
+    </div>
+
+    <div id="rate22Div" style="display:none;">
+      <label>Enter Today’s 22K Rate (₹/gram):</label>
+      <input type="number" id="rate22" placeholder="e.g. 10400">
+    </div>
+
+    <label>Enter Gold Weight (grams):</label>
+    <input type="number" id="goldWeight" placeholder="e.g. 10">
+
+    <label>How much amount do you want (₹):</label>
+    <input type="number" id="loanAmount" placeholder="e.g. 50000">
+
+    <label>Loan Duration (days):</label>
+    <input type="number" id="loanDays" placeholder="e.g. 90">
+
+    <button id="calculateBtn">Calculate</button>
+    <button id="buyLoanBtn">Buy Gold Loan</button>
+    <button id="payInterestBtn">Pay Interest</button>
+
+    <div class="result" id="result" style="display:none;">
+      <p><b>Price per gram:</b> ₹<span id="price"></span></p>
+      <p><b>Maximum Loan Limit:</b> ₹<span id="limit"></span></p>
+      <p><b>Recommended Amount:</b> ₹<span id="recommended"></span></p>
+      <p><b>Interest Rate:</b> <span id="rate"></span>%</p>
+      <p><b>Interest (for period):</b> ₹<span id="interest"></span></p>
+      <p><b>Total Payable:</b> ₹<span id="total"></span></p>
+
+      <a href="interest-calculator.html">
+        <button style="background:#4CAF50; color:white; border:none; padding:10px 20px; border-radius:5px; margin-top:10px;">
+          📈 Go to Interest Calculator
+        </button>
+      </a>
+    </div>
+  </div>
+
+<script>
+
+// Switch purity input boxes
+document.getElementById("purity").addEventListener("change", function() {
+  const purity = this.value;
+  if (purity === "24K") {
+    document.getElementById("rate24Div").style.display = "block";
+    document.getElementById("rate22Div").style.display = "none";
+  } else {
+    document.getElementById("rate24Div").style.display = "none";
+    document.getElementById("rate22Div").style.display = "block";
+  }
+});
+
+document.getElementById("calculateBtn").addEventListener("click", calculateLoan);
+
+function calculateLoan() {
+  const purity = document.getElementById("purity").value;
+  const rate24 = parseFloat(document.getElementById("rate24").value);
+  const rate22 = parseFloat(document.getElementById("rate22").value);
+  const weight = parseFloat(document.getElementById("goldWeight").value);
+  const requested = parseFloat(document.getElementById("loanAmount").value);
+  const days = parseInt(document.getElementById("loanDays").value);
+
+  if (!weight || !requested || !days) {
+    alert("Please fill all the fields!");
+    return;
+  }
+
+  const pricePerGram = purity === "24K" ? rate24 : rate22;
+  if (!pricePerGram) {
+    alert("Please enter today's gold rate for the selected purity!");
+    return;
+  }
+
+  const limit = weight * pricePerGram;
+  const recommended = limit * 0.75;
+
+  let rate = 18.25;
+  if (days > 90 && days < 365) rate = 24;
+  else if (days >= 365) rate = 30;
+
+  const disbursed = Math.min(requested, limit);
+  const interest = disbursed * (rate / 100) * (days / 365);
+  const total = disbursed + interest;
+
+  document.getElementById("price").innerText = pricePerGram.toFixed(2);
+  document.getElementById("limit").innerText = limit.toFixed(2);
+  document.getElementById("recommended").innerText = recommended.toFixed(2);
+  document.getElementById("rate").innerText = rate.toFixed(2);
+  document.getElementById("interest").innerText = interest.toFixed(2);
+  document.getElementById("total").innerText = total.toFixed(2);
+  document.getElementById("result").style.display = "block";
+}
+
+// BUY LOAN
+document.getElementById("buyLoanBtn").addEventListener("click", () => {
+
+  let userEmail = localStorage.getItem("userEmail");
+  if (!userEmail) {
+    userEmail = prompt("Enter your email:");
+    localStorage.setItem("userEmail", userEmail);
+  }
+
+  const purity = document.getElementById("purity").value;
+  const weight = parseFloat(document.getElementById("goldWeight").value);
+  const pricePerGram = parseFloat(document.getElementById("price").innerText);
+  const requested = parseFloat(document.getElementById("loanAmount").value);
+  const rate = parseFloat(document.getElementById("rate").innerText);
+  const interest = parseFloat(document.getElementById("interest").innerText);
+  const total = parseFloat(document.getElementById("total").innerText);
+  const days = parseInt(document.getElementById("loanDays").value);
+
+  fetch("http://localhost:3000/api/loans/buy", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      userEmail,
+      purity,
+      goldWeight: weight,
+      goldRate: pricePerGram,
+      loanAmount: requested,
+      days,
+      interestRate: rate,
+      interest,
+      totalPayable: total,
+    }),
+  })
+  .then(res => res.json())
+  .then(data => alert(data.message || "Loan saved!"))
+  .catch(err => console.error(err));
+});
+
+// PAY INTEREST
+document.getElementById("payInterestBtn").addEventListener("click", () => {
+
+  let userEmail = localStorage.getItem("userEmail");
+
+  if (!userEmail) {
+    userEmail = prompt("Enter your email:");
+    localStorage.setItem("userEmail", userEmail);
+  }
+
+  const interest = parseFloat(document.getElementById("interest").innerText);
+
+  if (!interest) return alert("Please calculate loan first!");
+
+  fetch("http://localhost:3000/api/loans/pay-interest", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ userEmail, amount: interest }),
+  })
+  .then(res => res.json())
+  .then(data => alert(data.message || "Interest saved!"))
+  .catch(err => console.error(err));
+});
+
+</script>
+
+</body>
+</html>

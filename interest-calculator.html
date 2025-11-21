@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Interest Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #fff8e1;
+      color: #222;
+      text-align: center;
+    }
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      width: 400px;
+      margin: 50px auto;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+    input, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+    button {
+      background: #f4b400;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Back Button -->
+  <a href="dashboard.html" style="text-decoration:none; color:white;">
+    <button style="background:#f4b400; border:none; padding:10px 20px; border-radius:5px; margin-top:20px;">
+      ⬅ Back to Dashboard
+    </button>
+  </a>
+
+  <div class="box">
+    <h2>📈 Interest Calculator</h2>
+
+    <label>Loan Amount (₹):</label>
+    <input type="number" id="amount" placeholder="Enter loan amount">
+
+    <label>Loan Duration (days):</label>
+    <input type="number" id="days" placeholder="Enter days">
+
+    <button id="calcBtn">Calculate</button>
+
+    <div id="result" style="display:none; margin-top:15px;">
+      <p><b>Interest Rate:</b> <span id="rate"></span>%</p>
+      <p><b>Interest Amount:</b> ₹<span id="interest"></span></p>
+      <p><b>Total Payable:</b> ₹<span id="total"></span></p>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("calcBtn").addEventListener("click", () => {
+      const amount = parseFloat(document.getElementById("amount").value);
+      const days = parseInt(document.getElementById("days").value);
+
+      if (!amount || !days) {
+        alert("Please enter both amount and duration!");
+        return;
+      }
+
+      let rate = 18.25;
+      if (days > 90 && days < 365) rate = 24;
+      else if (days >= 365) rate = 30;
+
+      const interest = (amount * rate * days) / (365 * 100);
+      const total = amount + interest;
+
+      document.getElementById("rate").innerText = rate.toFixed(2);
+      document.getElementById("interest").innerText = interest.toFixed(2);
+      document.getElementById("total").innerText = total.toFixed(2);
+      document.getElementById("result").style.display = "block";
+    });
+  </script>
+
+</body>
+</html>

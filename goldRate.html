@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Live Gold Rate - Gold Financial</title>
+  <link rel="stylesheet" href="goldRate.css">
+</head>
+<body>
+  <header>
+    <h1>📈 Live Gold Rate</h1>
+    <button onclick="window.location.href='dashboard.html'">⬅ Back to Dashboard</button>
+  </header>
+
+  <main>
+  <section id="rateSection">
+    <h2>Today's Gold Price (India)</h2>
+
+    
+<label for="puritySelect">Select Purity:</label>
+<select id="puritySelect" onchange="showSelectedRate()">
+  <option value="24">24K Gold</option>
+  <option value="22">22K Gold</option>
+</select>
+<p id="selectedRate">Loading...</p>
+
+
+    <table>
+      <tr>
+        <th>Purity</th>
+        <th>Price per gram (₹)</th>
+      </tr>
+      <tr>
+        <td>24K Gold</td>
+        <td id="gold24">Loading...</td>
+      </tr>
+      <tr>
+        <td>22K Gold</td>
+        <td id="gold22">Loading...</td>
+      </tr>
+    </table>
+
+    <p id="selectedRate"></p>
+    <p id="lastUpdated"></p>
+  </section>
+
+  <section id="chartSection">
+    <h2>Gold Rate (Last 30 Days)</h2>
+    <canvas id="goldChart" width="400" height="200"></canvas>
+  </section>
+</main>
+
+
+
+    <section id="chartSection">
+      <h2>Gold Rate (Last 30 Days)</h2>
+      <canvas id="goldChart" width="400" height="200"></canvas>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="goldRate.js"></script>
+</body>
+</html>
