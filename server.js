@@ -1,9 +1,22 @@
-const express = require('express');
+require('dotenv').config();
 const mongoose = require('mongoose');
+const express = require('express');
+
 const cors = require('cors');
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: "https://kms-gold-financial-frontend.onrender.com",
+  credentials: true
+}));
+
+
 app.use(express.json());
+
+
+// Import routes
+const authRoutes = require('./routes/authRoutes');
+app.use('/api/auth', authRoutes);
+
 const adminRoutes = require("./routes/adminRoutes");
 app.use("/admin", adminRoutes);
 const pdfRoutes = require("./routes/pdfRoutes");
@@ -13,15 +26,17 @@ const Loan = require("./models/Loan");
 
 
 
-// MongoDB connection
-const uri = 'mongodb+srv://golduser:gold1234@cluster0.o61zfho.mongodb.net/test?retryWrites=true&w=majority';
-mongoose.connect(uri)
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.log('❌ Connection Error:', err));
+const uri = process.env.MONGODB_URI;
 
-// Import routes
-const authRoutes = require('./routes/authRoutes');
-app.use('/api/auth', authRoutes);
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true
+})
+.then(() => console.log('✅ MongoDB Connected'))
+.catch(err => console.log('❌ Connection Error:', err));
+
+
+
 
 // ✅ Important — singular “loan”
 const loanRoutes = require('./routes/loanRoutes');
@@ -83,7 +98,10 @@ app.get("/pdf/loan-receipt/:id", async (req, res) => {
 });
 
 // Start server
-const PORT = 3000;
+// Start server
+const PORT = process.env.PORT || 3000;
+
 app.listen(PORT, () => {
-  console.log(`🚀 Server running on http://localhost:${PORT}`);
+  console.log(`🚀 Server running on port ${PORT}`);
 });
+

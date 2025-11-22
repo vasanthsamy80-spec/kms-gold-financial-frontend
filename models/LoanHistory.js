@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const loanHistorySchema = new mongoose.Schema({
@@ -10,3 +11,4 @@ const loanHistorySchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("LoanHistory", loanHistorySchema);
+

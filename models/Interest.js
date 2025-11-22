@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const interestSchema = new mongoose.Schema({
@@ -7,3 +8,4 @@ const interestSchema = new mongoose.Schema({
 });
 
 module.exports = mongoose.model("Interest", interestSchema);
+

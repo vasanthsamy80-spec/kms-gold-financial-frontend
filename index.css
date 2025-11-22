@@ -1,3 +1,4 @@
+
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
 
 *{
@@ -29,8 +30,9 @@ header {
     position: fixed;
     top: 0;
     width: 100%;
-    padding: 10px 50px;
+   padding: 10px 20px;  /* smaller padding on all devices */
     display: flex;
+    flex-wrap: wrap;     /* makes items go to next line if needed */
     justify-content: space-between;
     align-items: center;
 
@@ -74,7 +76,8 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    width: 420px;
+    width: 90%;   /* Makes it flexible on mobile */
+    max-width: 420px;  /* Keeps it same size on desktop */
     background: rgba(0, 0, 0, 0.4);
     border: 2px solid rgba(255, 223, 0, 0.6);
     border-radius: 20px;
@@ -183,3 +186,32 @@ header {
 .login-container {
   margin-top: 180px !important;
 }
+
+@media (max-width: 768px) {
+    .navigation {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .navigation a, .btnLogin-popup {
+        width: 100%;
+        margin: 5px 0;
+        text-align: left;
+    }
+}
+@media (max-width: 768px) {
+    .input-box input {
+        padding: 12px 35px 12px 10px;  /* smaller padding */
+    }
+
+    .btn {
+        height: 42px;       /* smaller button */
+        font-size: 1em;     /* smaller text */
+    }
+
+    .form-box h2 {
+        font-size: 1.5em;   /* smaller title */
+    }
+}
+

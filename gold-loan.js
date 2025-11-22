@@ -1,3 +1,4 @@
+
 // gold-loan.js
 // Example/static per-gram prices (you can change later or fetch from goldRate)
 const rate24 = parseFloat(document.getElementById("rate24").value) || 6200;
@@ -46,7 +47,8 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
   document.getElementById("resultBox").style.display = "block";
 });
 
-// 🟢 BUY GOLD LOAN BUTTON
+const API = "https://kms-gold-financial-2.onrender.com";
+
 document.getElementById("buyLoanBtn").addEventListener("click", async () => {
   const userEmail = localStorage.getItem("userEmail") || prompt("Enter your email:");
   if (!userEmail) return alert("Email required!");
@@ -55,18 +57,15 @@ document.getElementById("buyLoanBtn").addEventListener("click", async () => {
   const goldWeight = parseFloat(document.getElementById("weightGram").value);
   const days = parseInt(document.getElementById("days").value);
   const loanAmount = parseFloat(document.getElementById("requestedAmount").value);
-
-  const goldRate = parseFloat(document.getElementById("rate24").value);  // IMPORTANT
+  const goldRate = parseFloat(document.getElementById("rate24").value);
   const interestRate = parseFloat(document.getElementById("ratePercent").textContent);
-
   const interest = parseFloat(document.getElementById("interestAmt").textContent);
   const totalPayable = parseFloat(document.getElementById("totalPay").textContent);
 
-  // OPTIONAL phone number
   const phone = localStorage.getItem("userPhone") || "";
 
   try {
-    const res = await fetch("http://localhost:3000/api/loans/buy", {
+    const res = await fetch(`${API}/api/loans/buy`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -84,35 +83,30 @@ document.getElementById("buyLoanBtn").addEventListener("click", async () => {
     });
 
     const data = await res.json();
-    alert(data.message || "✅ Loan saved successfully!");
+    alert(data.message || "Loan saved successfully!");
   } catch (err) {
-    console.error("❌ Save failed:", err);
+    console.error(err);
     alert("Failed to save loan!");
   }
 });
 
-
+// PAY INTEREST
 document.getElementById("payInterestBtn").addEventListener("click", async () => {
-  const userEmail = localStorage.getItem("userEmail") || prompt("Enter your email:");
-  const interestAmount = parseFloat(document.getElementById("interestAmt").textContent);
-
-  if (!userEmail || !interestAmount) {
-    alert("Please calculate loan before paying interest.");
-    return;
-  }
+  const userEmail = localStorage.getItem("userEmail");
+  const amount = parseFloat(document.getElementById("interestAmt").textContent);
 
   try {
-    const res = await fetch("http://localhost:3000/api/loans/pay-interest", {
+    const res = await fetch(`${API}/api/loans/pay-interest`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ userEmail, amount: interestAmount }),
+      body: JSON.stringify({ userEmail, amount }),
     });
 
-
     const data = await res.json();
-    alert(data.message || "✅ Interest payment saved!");
+    alert(data.message || "Interest payment saved!");
   } catch (err) {
-    console.error("❌ Error:", err);
+    console.error(err);
     alert("Failed to save payment!");
   }
 });
+

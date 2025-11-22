@@ -5,6 +5,8 @@ const btnPopup = document.querySelector('.btnLogin-popup');
 const iconClose = document.querySelector('.icon-close');
 const forgotPasswordLink = document.getElementById('forgotPasswordLink');
 
+const API_URL = "https://kms-gold-financial-3.onrender.com";
+
 // ---------- FORM SWITCH HANDLER ----------
 function showForm(formClass) {
     document.querySelectorAll(".form-box").forEach(f =>
@@ -50,7 +52,7 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   const phone = document.getElementById("registerPhone").value.trim();
   const password = document.getElementById("registerPassword").value.trim();
 
-  const response = await fetch("http://localhost:3000/api/auth/register", {
+  const response = await fetch(`${API_URL}/api/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, phone, password }),
@@ -85,7 +87,7 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     : { phone: emailOrPhone, password };
 
   try {
-    const response = await fetch("http://localhost:3000/api/auth/login", {
+    const response = await fetch(`${API_URL}/api/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -127,7 +129,7 @@ document.getElementById("forgotPasswordForm").addEventListener("submit", async (
     : { phone: emailOrPhoneRaw, newPassword };
 
   try {
-    const res = await fetch("http://localhost:3000/api/auth/forgot-password", {
+    const res = await fetch(`${API_URL}/api/auth/forgot-password`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
@@ -149,4 +151,3 @@ document.getElementById("forgotPasswordForm").addEventListener("submit", async (
     alert("Error occurred");
   }
 });
-

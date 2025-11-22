@@ -1,3 +1,4 @@
+
 const express = require("express");
 const PDFDocument = require("pdfkit");
 const Loan = require("../models/Loan");
@@ -89,3 +90,4 @@ router.get("/interest-receipt/:id", async (req, res) => {
 
 
 module.exports = router;
+

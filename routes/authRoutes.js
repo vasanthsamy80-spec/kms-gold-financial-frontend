@@ -1,3 +1,4 @@
+
 const express = require('express');
 const router = express.Router();
 const bcrypt = require('bcryptjs');
@@ -5,7 +6,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // 🔐 Secret key for signing JWT
-const JWT_SECRET = "goldSecretKey"; // You can change this to something unique
+const JWT_SECRET = process.env.JWT_SECRET;
+// You can change this to something unique
 
 // ✅ Register route
 router.post('/register', async (req, res) => {

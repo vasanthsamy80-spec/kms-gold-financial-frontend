@@ -1,3 +1,4 @@
+
 const mongoose = require("mongoose");
 
 const loanSchema = new mongoose.Schema(
@@ -17,3 +18,4 @@ const loanSchema = new mongoose.Schema(
 );
 
 module.exports = mongoose.model("Loan", loanSchema);
+

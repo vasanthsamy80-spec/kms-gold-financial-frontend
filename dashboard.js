@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
   // ✅ Check login
   const userEmail = localStorage.getItem("userEmail");
@@ -101,3 +102,4 @@ document.addEventListener("DOMContentLoaded", function () {
     window.location.href = "interest-calculator.html";
   });
 });
+

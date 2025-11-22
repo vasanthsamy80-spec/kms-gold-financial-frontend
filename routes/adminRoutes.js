@@ -1,3 +1,4 @@
+
 const express = require("express");
 const Admin = require("../models/Admin");
 const jwt = require("jsonwebtoken");
@@ -17,3 +18,4 @@ router.post("/login", async (req, res) => {
 });
 
 module.exports = router;
+

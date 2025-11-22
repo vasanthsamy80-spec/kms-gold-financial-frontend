@@ -1,3 +1,4 @@
+
 const apiKey = "goldapi-4ejd0m91vmhlyd06d-io";
 
 async function fetchGoldRate() {
@@ -58,3 +59,4 @@ function drawGoldChart() {
 }
 
 fetchGoldRate();
+

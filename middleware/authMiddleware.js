@@ -1,3 +1,4 @@
+
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = "goldSecretKey"; // Same as in authRoutes.js
 
@@ -15,3 +16,4 @@ function authMiddleware(req, res, next) {
 }
 
 module.exports = authMiddleware;
+
