@@ -4,6 +4,8 @@ const registerLink = document.querySelector('.register-link');
 const btnPopup = document.querySelector('.btnLogin-popup');
 const iconClose = document.querySelector('.icon-close');
 const forgotPasswordLink = document.getElementById('forgotPasswordLink');
+const BASE_URL = "https://kms-gold-financial-4.onrender.com";
+
 
 const API_URL = "https://kms-gold-financial-3.onrender.com";
 
@@ -52,11 +54,13 @@ document.getElementById("registerForm").addEventListener("submit", async (e) => 
   const phone = document.getElementById("registerPhone").value.trim();
   const password = document.getElementById("registerPassword").value.trim();
 
-  const response = await fetch(`${API_URL}/api/auth/register`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email, phone, password }),
-  });
+
+ const response = await fetch(`${BASE_URL}/api/auth/register`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ email, phone, password }),
+});
+
 
   const data = await response.json();
 
@@ -81,31 +85,40 @@ document.getElementById("loginForm").addEventListener("submit", async (e) => {
     return;
   }
 
-  const isEmail = emailOrPhone.includes("@");
-  const body = isEmail
-    ? { email: emailOrPhone, password }
+
+  // Decide if input is email or phone
+  const body = emailOrPhone.includes("@")
+    ? { email: emailOrPhone.toLowerCase(), password }
     : { phone: emailOrPhone, password };
 
   try {
-    const response = await fetch(`${API_URL}/api/auth/login`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+    const response = await fetch(`${BASE_URL}/api/auth/login`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
+});
+
 
     const data = await response.json();
 
-    if (response.ok && data.token) {
-      alert("Login successful!");
+    if (!response.ok) {
+      // Show backend error message
+      alert(data.message || "Invalid login");
+      return;
+    }
+
+    if (data.token) {
       localStorage.setItem("token", data.token);
       localStorage.setItem("userEmail", emailOrPhone);
-      window.location.href = "dashboard.html";
+
+      // Use absolute path for Render hosting
+      window.location.href = "/dashboard.html";
     } else {
-      alert(data.message || "Invalid login");
+      alert("Login failed. No token received.");
     }
   } catch (err) {
-    console.error(err);
-    alert("Error occurred");
+    console.error("Login error:", err);
+    alert("Server error. Please try again later.");
   }
 });
 
@@ -129,11 +142,12 @@ document.getElementById("forgotPasswordForm").addEventListener("submit", async (
     : { phone: emailOrPhoneRaw, newPassword };
 
   try {
-    const res = await fetch(`${API_URL}/api/auth/forgot-password`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-    });
+
+    const res = await fetch(`${BASE_URL}/api/auth/forgot-password`, {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify(body),
+});
 
     const data = await res.json();
 
