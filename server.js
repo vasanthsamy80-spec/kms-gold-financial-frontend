@@ -3,14 +3,15 @@ require('dotenv').config();
 const express = require('express');
 
 const mongoose = require('mongoose');
-const express = require('express');
+
 
 const cors = require('cors');
 const app = express();
 app.use(cors({
-  origin: "https://kms-gold-financial-frontend.onrender.com",
+  origin: "https://kms-gold-financial-frontend-v2.onrender.com",
   credentials: true
 }));
+
 
 
 app.use(express.json());
