@@ -47,7 +47,8 @@ document.getElementById("calculateBtn").addEventListener("click", () => {
   document.getElementById("resultBox").style.display = "block";
 });
 
-const API = "https://kms-gold-financial-2.onrender.com";
+const BASE_URL = "https://kms-gold-financial-4.onrender.com";
+
 
 document.getElementById("buyLoanBtn").addEventListener("click", async () => {
   const userEmail = localStorage.getItem("userEmail") || prompt("Enter your email:");

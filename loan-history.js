@@ -1,5 +1,6 @@
 
-const API = "https://kms-gold-financial-2.onrender.com";
+const BASE_URL = "https://kms-gold-financial-4.onrender.com";
+
 
 document.addEventListener("DOMContentLoaded", async () => {
   const email = localStorage.getItem("userEmail");
